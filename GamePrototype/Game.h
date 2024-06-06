@@ -1,5 +1,8 @@
 #pragma once
 #include "BaseGame.h"
+#include "Player.h"
+#include "Camera.h"
+#include "Map.h"
 class Game : public BaseGame
 {
 public:
@@ -27,4 +30,8 @@ private:
 	void Initialize();
 	void Cleanup( );
 	void ClearBackground( ) const;
+
+	Player* m_pPlayer;
+	Camera* m_pCamera;
+	
 };

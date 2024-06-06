@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Game.h"
+#include "utils.h"
 
 Game::Game( const Window& window ) 
 	:BaseGame{ window }
@@ -10,21 +11,36 @@ Game::Game( const Window& window )
 Game::~Game( )
 {
 	Cleanup( );
+	delete m_pPlayer;
+	m_pPlayer = nullptr;
+
+	delete m_pCamera;
+	m_pCamera = nullptr;
 }
 
-void Game::Initialize( )
+void Game::Initialize()
 {
+	m_pPlayer = new Player{ Point2f{150,150} };
+	m_pCamera = new Camera{ GetViewPort().width, GetViewPort().height };
 	
+	m_pPlayer->ProcessSVGFile("SvgMaze2.svg");
+	m_pPlayer->ProcessSVGFile2("Maze4.svg");
+	m_pPlayer->ProcessSVGFile3("Maze5.svg");
 }
 
 void Game::Cleanup( )
-{
+{ 
 }
 
 void Game::Update( float elapsedSec )
 {
+	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
+	m_pPlayer->Move(elapsedSec, pStates);
+	m_pPlayer->Raycast();
+	m_pPlayer->Win();
+	
 	// Check keyboard state
-	//const Uint8 *pStates = SDL_GetKeyboardState( nullptr );
+	
 	//if ( pStates[SDL_SCANCODE_RIGHT] )
 	//{
 	//	std::cout << "Right arrow key is down\n";
@@ -38,6 +54,16 @@ void Game::Update( float elapsedSec )
 void Game::Draw( ) const
 {
 	ClearBackground( );
+	m_pPlayer->Draw();
+	//m_Map.Draw();
+	glPopMatrix();
+	
+	m_pCamera->Aim(2000, 2000, m_pPlayer->GetPosition());
+
+	m_pCamera->Reset();
+
+	glPushMatrix();
+	
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
