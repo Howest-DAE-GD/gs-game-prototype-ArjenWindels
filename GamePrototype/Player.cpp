@@ -32,8 +32,6 @@ void Player::Draw() const
 			utils::SetColor(Color4f{ 0.f,1.f,0.f,1.f });
 			utils::DrawPolygon(m_Vertices[i], 3.f);
 			
-			utils::FillEllipse(1300, 2800, 30, 30);
-			utils::FillEllipse(2350, 2800, 30, 30);
 			
 		}
 	}
