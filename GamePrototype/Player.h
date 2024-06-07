@@ -14,11 +14,12 @@ public:
 	void ProcessSVGFile3(const std::string& filePath);
 	void Raycast();
 	void Win();
+
 	
 private:
 	Point2f m_Pos;
 	float m_Speed;
-	
+
 	Point2f startPointLeft;
 	Point2f endPointLeft;
 	Point2f startPointRight;

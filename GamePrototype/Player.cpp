@@ -11,8 +11,9 @@ Player::Player(const Point2f& pos) :
 	startPointRight{},
 	endPointRight{},
 	m_Won{ false },
-	m_WinCounter{2},
-	m_Timer{0}
+	m_WinCounter{ 0 },
+	m_Timer{ 0 }
+
 	
 {
 	m_pSVG = new SVGParser();
@@ -28,15 +29,18 @@ void Player::Draw() const
 	if (m_WinCounter == 0)
 	{
 		for (int i = 0; i < m_Vertices.size(); ++i) {
-			utils::SetColor(Color4f{ 1.f,0.f,0.f,1.f });
+			utils::SetColor(Color4f{ 0.f,1.f,0.f,1.f });
 			utils::DrawPolygon(m_Vertices[i], 3.f);
-
+			
+			utils::FillEllipse(1300, 2800, 30, 30);
+			utils::FillEllipse(2350, 2800, 30, 30);
+			
 		}
 	}
 	if (m_WinCounter == 1)
 	{
 		for (int i = 0; i < m_Vertices2.size(); ++i) {
-			utils::SetColor(Color4f{ 1.f,0.f,0.f,1.f });
+			utils::SetColor(Color4f{ 0.f,0.f,1.f,1.f });
 			utils::DrawPolygon(m_Vertices2[i], 3.f);
 
 		}
@@ -142,11 +146,24 @@ void Player::Win()
 	{
 		
 		++m_WinCounter;
-		std::cout << "Round 2!!!" << m_WinCounter << std::endl;
+		if (m_WinCounter == 1)
+		{
+			std::cout << "You made it through the first maze, keep going!!" << std::endl;
+		}
+		if (m_WinCounter == 2)
+		{
+			std::cout << "One more maze and you are free!!" << std::endl;
+		}
+		if (m_WinCounter == 3)
+		{
+			std::cout << "You thought you could escape, NEVER, you will be stuck here FOREVER!!" << std::endl;
+		}
 		m_Pos = Point2f{ 100,100 };
 	}
 	if (m_WinCounter == 3) m_WinCounter = 0;
 }
+
+
 
 void Player::ProcessSVGFile(const std::string& filePath)
 {
