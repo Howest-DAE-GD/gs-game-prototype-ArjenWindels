@@ -57,7 +57,7 @@ void Game::Draw( ) const
 	m_pPlayer->Draw();
 	//m_Map.Draw();
 	glPopMatrix();
-	m_pPlayer->Coins();
+	
 	m_pCamera->Aim(2000, 2000, m_pPlayer->GetPosition());
 
 	m_pCamera->Reset();
